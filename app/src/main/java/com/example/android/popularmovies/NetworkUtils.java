@@ -34,7 +34,7 @@ public final class NetworkUtils {
     final static String PARAM_SORT = "sort_by";
     final static String sortBy = "popularity.desc";
     final static String API_KEY = "api_key";
-    final static String api = "d9e9abfe0cfed2bec0b04898afd38496";
+    final static String api = "API_KEY";
 
     /** Tag for the log messages */
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
