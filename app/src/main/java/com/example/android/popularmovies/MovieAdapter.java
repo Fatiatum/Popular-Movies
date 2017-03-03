@@ -15,6 +15,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movie> mMovieTitles;
     private final ListItemClickListener mClickHandler;
     private Context context;
+
     public interface ListItemClickListener {
         void onClick(String movieClicked);
     }
@@ -37,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             Movie currentMovie = mMovieTitles.get(adapterPosition);
-            mClickHandler.onClick(currentMovie.getTitle());
+            mClickHandler.onClick(currentMovie.getId() + "");
         }
     }
 

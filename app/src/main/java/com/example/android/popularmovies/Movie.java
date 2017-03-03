@@ -7,6 +7,8 @@ public class Movie {
 
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185";
 
+    private int mId;
+
     /** Title of the movie */
     private String mTitle;
 
@@ -25,9 +27,12 @@ public class Movie {
     /** Votes Count of the movie */
     private int mVotes;
 
-    public Movie(String mTitle) {
+    public Movie(int id, String mTitle) {
         this.mTitle = mTitle;
+        this.mId = id;
     }
+
+    public Movie(){}
 
     public void setOverview(String mOverview) {
         this.mOverview = mOverview;
@@ -47,6 +52,10 @@ public class Movie {
 
     public void setVotes(int mVotes) {
         this.mVotes = mVotes;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public String getDate() {
@@ -69,7 +78,7 @@ public class Movie {
         return mTitle;
     }
 
-    public int getVotes() {
-        return mVotes;
+    public String getVotes() {
+        return mVotes + "";
     }
 }

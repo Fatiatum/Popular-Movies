@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <Spinner
+    <!--<item
         android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:title="Spinner"
+        app:actionViewClass="android.widget.Spinner"
+        android:background="#ff00"
+        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/popular"
+        android:title="Sort by Popular"/>
+    <item
+        android:id="@+id/rate"
+        android:title="Sort by Rate"/>
 </menu>

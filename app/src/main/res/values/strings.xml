@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="date_label">Release date: </string>
+    <string name="voting_label">Number of votes: </string>
+    <string name="synopsis_label">Overview:</string>
 </resources>
