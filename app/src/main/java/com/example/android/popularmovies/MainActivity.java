@@ -101,9 +101,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
         @Override
         protected void onPostExecute(List<Movie> movies) {
-            if(!movies.isEmpty()){
+            if(movies != null){
                 showMovieDataView();
                 mAdapter.setMovieTitles(movies);
+            }
+            else{
+                Toast.makeText(MainActivity.this, "No Internet connection", Toast.LENGTH_LONG).show();
             }
         }
     }

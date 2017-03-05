@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/scroll_padding"
         android:fillViewport="false">
 
         <LinearLayout
@@ -19,37 +21,38 @@
                 android:id="@+id/movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:paddingTop="8dp"
-                android:textSize="32sp"/>
+                android:paddingTop="@dimen/small_padding"
+                android:textSize="@dimen/large_text_size"
+                tools:text="Movie Title"/>
 
             <ImageView
                 android:id="@+id/movie_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="16dp"/>
+                android:paddingTop="@dimen/medium_padding"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="8dp">
+                android:paddingTop="@dimen/small_padding">
 
                 <TextView
                     android:text="@string/date_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:textSize="16sp"/>
+                    android:layout_marginRight="@dimen/small_padding"
+                    android:textSize="@dimen/small_text_size"/>
 
                 <TextView
                     android:id="@+id/movie_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="@dimen/small_text_size"/>
 
             </LinearLayout>
 
@@ -63,14 +66,14 @@
                     android:text="@string/voting_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:textSize="16sp"/>
+                    android:layout_marginRight="@dimen/small_padding"
+                    android:textSize="@dimen/small_text_size"/>
 
                 <TextView
                     android:id="@+id/movie_voting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="@dimen/small_text_size"/>
 
             </LinearLayout>
 
@@ -78,18 +81,17 @@
                 android:text="@string/synopsis_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="16sp"/>
+                android:paddingTop="@dimen/small_padding"
+                android:layout_marginRight="@dimen/small_padding"
+                android:textSize="@dimen/small_text_size"/>
 
             <TextView
                 android:id="@+id/movie_synopsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:textSize="18sp"/>
+                android:paddingTop="@dimen/small_padding"
+                android:textSize="@dimen/medium_text_size"/>
 
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
-

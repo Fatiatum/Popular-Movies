@@ -24,21 +24,16 @@ import java.util.List;
  */
 public final class NetworkUtils {
 
-    final static String TMDB_BASE_URL =
-            "https://api.themoviedb.org/3/discover/movie?";
-
-    final static String TMDB_MOVIE_URL =
+    final static String TMDB_URL =
             "https://api.themoviedb.org/3/movie";
 
     /*
      * sorted by most popular movies or high rated
      * Default: results are sorted by popular movies if no field is specified.
      */
-    final static String PARAM_SORT = "sort_by";
-    final static String sortByPop = "popularity.desc";
-    final static String sortByRate = "vote_average.desc";
     final static String API_KEY = "api_key";
-    final static String api = "";
+    final static String popular = "popular";
+    final static String rate = "top_rated";
 
     /** Tag for the log messages */
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
@@ -56,22 +51,14 @@ public final class NetworkUtils {
      *
      * @return The URL to use to query the TMDB server.
      */
-    public static URL getAllMoviesUrl(boolean sortType) {
+    public static URL getMovieUrl(String movie_id) {
         Uri builtUri;
 
+        builtUri = Uri.parse(TMDB_URL).buildUpon()
+                .appendPath(movie_id)
+                .appendQueryParameter(API_KEY, BuildConfig.TMDB_API_KEY)
+                .build();
 
-        if(sortType){
-            builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
-                    .appendQueryParameter(PARAM_SORT, sortByRate)
-                    .appendQueryParameter(API_KEY, api)
-                    .build();
-        }
-        else{
-            builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
-                    .appendQueryParameter(PARAM_SORT, sortByPop)
-                    .appendQueryParameter(API_KEY, api)
-                    .build();
-        }
 
 
         URL url = null;
@@ -89,15 +76,21 @@ public final class NetworkUtils {
      *
      * @return The URL to use to query the TMDB server.
      */
-    public static URL getMovieUrl(String movie_id) {
+    public static URL getUrl(boolean sortType) {
         Uri builtUri;
 
-        builtUri = Uri.parse(TMDB_MOVIE_URL).buildUpon()
-                .appendPath(movie_id)
-                .appendQueryParameter(API_KEY, api)
-                .build();
-
-
+        if(sortType){
+            builtUri = Uri.parse(TMDB_URL).buildUpon()
+                    .appendPath(rate)
+                    .appendQueryParameter(API_KEY, BuildConfig.TMDB_API_KEY)
+                    .build();
+        }
+        else{
+            builtUri = Uri.parse(TMDB_URL).buildUpon()
+                    .appendPath(popular)
+                    .appendQueryParameter(API_KEY, BuildConfig.TMDB_API_KEY)
+                    .build();
+        }
 
         URL url = null;
         try {
@@ -114,7 +107,7 @@ public final class NetworkUtils {
      */
     public static List<Movie> fetchMoviesData(boolean sortType) {
         // Create URL object
-        URL url = getAllMoviesUrl(sortType);
+        URL url = getUrl(sortType);
 
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
