@@ -1,5 +1,7 @@
 package com.example.android.popularmovies;
 
+import java.util.List;
+
 /**
  * Created by fc__j on 22/02/2017.
  */
@@ -26,6 +28,8 @@ public class Movie {
 
     /** Votes Count of the movie */
     private int mVotes;
+
+    private List<String> trailers;
 
     public Movie(int id, String mTitle) {
         this.mTitle = mTitle;
@@ -54,6 +58,10 @@ public class Movie {
         this.mVotes = mVotes;
     }
 
+    public void setTrailers(List<String> trailers) {
+        this.trailers = trailers;
+    }
+
     public int getId() {
         return mId;
     }
@@ -80,5 +88,9 @@ public class Movie {
 
     public String getVotes() {
         return mVotes + "";
+    }
+
+    public List<String> getTrailers() {
+        return trailers;
     }
 }

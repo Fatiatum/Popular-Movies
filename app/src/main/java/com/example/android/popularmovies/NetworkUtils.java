@@ -32,6 +32,7 @@ public final class NetworkUtils {
      * Default: results are sorted by popular movies if no field is specified.
      */
     final static String API_KEY = "api_key";
+    final static String videos = "videos";
     final static String popular = "popular";
     final static String rate = "top_rated";
 
@@ -44,6 +45,32 @@ public final class NetworkUtils {
      * directly from the class name NetworkUtils (and an object instance of NetworkUtils is not needed).
      */
     private NetworkUtils() {
+    }
+
+    /**
+     * Builds the URL used to fetch movie trailers from TMDB.
+     *
+     * @return The URL to use to query the TMDB server.
+     */
+    public static URL getTrailersUrl(String movie_id) {
+        Uri builtUri;
+
+        builtUri = Uri.parse(TMDB_URL).buildUpon()
+                .appendPath(movie_id)
+                .appendPath(videos)
+                .appendQueryParameter(API_KEY, BuildConfig.TMDB_API_KEY)
+                .build();
+
+
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
     }
 
     /**
@@ -141,9 +168,33 @@ public final class NetworkUtils {
 
         // Extract relevant fields from the JSON response and create a list of {@link Movie}s
         Movie movie = extractMovieFromJson(jsonResponse);
+        List<String> trailers = fetchTrailers(movie_id + "");
+        movie.setTrailers(trailers);
 
         // Return the list of {@link Movie}s
         return movie;
+    }
+
+    /**
+     * Query the TMDB dataset and return a list of trailers.
+     */
+    private static List<String> fetchTrailers(String movie_id){
+        // Create URL object
+        URL url = getTrailersUrl(movie_id);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Movie}s
+        List<String> trailers = extractTrailersFromJson(jsonResponse);
+
+        // Return the list of {@link Movie}s
+        return trailers;
     }
 
     /**
@@ -349,4 +400,49 @@ public final class NetworkUtils {
         return movie;
     }
 
+    /**
+     * Return a list of trailers that has been built up from
+     * parsing the given JSON response.
+     */
+    private static List<String> extractTrailersFromJson(String trailersJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(trailersJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding movies to
+        List<String> trailers = new ArrayList<>();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+            // Create a JSONObject from the JSON response string
+            JSONObject baseJsonResponse = new JSONObject(trailersJSON);
+
+            // Extract the JSONArray associated with the key called "results",
+            // which represents a list of results.
+            JSONArray trailersArray = baseJsonResponse.getJSONArray("results");
+
+            // For each movie in the movieArray, create an {@link Movie} object
+            for (int i = 0; i < trailersArray.length(); i++) {
+
+                // Get a single movie at position i within the list of movies
+                JSONObject currentTrailer = trailersArray.getJSONObject(i);
+
+                // Extract the value for the key called "title"
+                trailers.add(currentTrailer.getString("key"));
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("NetworksUtils", "Problem parsing the movies JSON results", e);
+        }
+
+        // Return the list of movies
+        return trailers;
+    }
 }
